@@ -1,0 +1,88 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <assert.h>
+
+int main() {
+    int a, b, a0, b0;
+    if (scanf("%d%d", &a, &b) != 2){
+        abort();
+    }
+
+    int flag = 1;
+    if (a < b){
+        flag = 0;
+        int c = a;
+        a = b;
+        b = c;
+    }
+    a0 = a;
+    b0 = b;
+    while (a % b != 0){
+        int c = a % b;
+        a = b;
+        b = c;
+
+    }
+    int ans = b;
+
+
+    a = a0 / ans;
+    b = b0 / ans;
+
+
+
+    int p, q, counta2, countb2, counta1 = 0, countb1 = 1, counta = 1, countb = 0;
+    q = a % b;
+    int n = 0;
+
+    if (q == 0){
+        if (!flag){
+            printf("%d %d %d\n", 1, 0, ans);
+            return 0;
+        }else{
+            printf("%d %d %d\n", 0, 1, ans);
+            return 0;
+        }
+    }
+
+    if ( q == 1 ){
+        counta1 = -1;
+        countb1 = -a / b;
+        n = 1;
+    } else{
+
+        while(q != 1) {
+            if (q == 0){
+                break;
+            }
+            p = a / b;
+            q = a % b;
+            counta2 = counta + counta1 * p;
+            countb2 = countb + countb1 * p;
+            a = b;
+            b = q;
+            counta = counta1;
+            countb = countb1;
+            counta1 = counta2;
+            countb1 = countb2;
+            n++;
+        };
+
+
+    }
+
+    if (!flag){
+        int c = -counta1;
+        counta1 = -countb1;
+        countb1 = c;
+    }
+
+    if (n % 2 == 0){
+        counta1 *= (-1);
+    } else{
+        countb1 *= (-1);
+    }
+
+    printf("%d %d %d\n", counta1, countb1, ans);
+    return 0;
+}
