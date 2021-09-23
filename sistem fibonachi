@@ -1,0 +1,47 @@
+#include <stdio.h>
+
+int fib(int n);
+int print_num(int x);
+
+int main() {
+    int x;
+    scanf("%d", &x);
+
+    print_num(x);
+
+    return 0;
+}
+
+int fib(int n) {
+    int first = 1, second = 1;
+    int idx;
+    if (n == 1) return 1;
+    for (idx = 2; idx <= n ; ++idx) {
+        int tmp = second;
+        second = (second + first);
+        first = tmp;
+    }
+    return second;
+}
+
+int print_num(int x) {
+    int a = x;
+    int pizan[100] = {0};
+    int beg = 0;
+
+    while (x != 0) {
+        int k = 2;
+        while (x >= fib(k)) {
+            k++;
+        }
+        if (x == a){
+            beg = k - 2;
+        }
+        pizan[k - 2] = 1;
+        x = x - fib(k - 1);
+    }
+    for (int i = beg; i >= 0; i--) {
+        printf("%d", pizan[i]);
+    }
+    return 0;
+}
