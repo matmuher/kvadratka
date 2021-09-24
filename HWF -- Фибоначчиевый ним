@@ -1,0 +1,66 @@
+#include <stdio.h>
+#include "stdlib.h"
+
+int fib(int n);
+int fib_num(int x);
+int next_turn(int total, int possible);
+
+int main() {
+    int total, possible;
+    if (scanf("%d %d", &total, &possible) != 2){
+        abort();
+    }
+    printf("%d", next_turn(total, possible));
+    return 0;
+}
+
+int fib(int n) {
+    int first = 1, second = 1;
+    int idx;
+    if (n == 1) return 1;
+    for (idx = 2; idx <= n ; ++idx) {
+        int tmp = second;
+        second = (second + first);
+        first = tmp;
+    }
+    return second;
+}
+
+int fib_num(int x) {
+    int fib_system[1000] = {0};
+    int ans;
+    ans = 1;
+
+    while (x != 0) {
+        int k;
+        k = 2;
+        while (x >= fib(k)) {
+            k++;
+        }
+        fib_system[k - 2] = 1;
+        x = x - fib(k - 1);
+    }
+
+    while (fib_system[ans - 1] == 0){
+        ans++;
+    }
+
+    return ans;
+}
+
+int next_turn(int total, int possible) {
+    int ans = 1;
+    int number = fib(fib_num(total));
+
+    if (total <= possible){
+        return total;
+    }
+
+    if (number <= possible){
+        if (total > 3 * number){
+            ans = number;
+        }
+    }
+
+    return ans;
+}
