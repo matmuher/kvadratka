@@ -1,16 +1,39 @@
 #include <stdio.h>
-#include "stdlib.h"
 
 int fib(int n);
 int fib_num(int x);
 int next_turn(int total, int possible);
 
 int main() {
-    int total, possible;
-    if (scanf("%d %d", &total, &possible) != 2){
-        abort();
+    int total, possible, move,  move_c;
+    printf("Number of sticks:");
+    scanf("%d", &total);
+    possible = total - 1;
+
+    while (total > 0){
+        printf("How many sticks do you take? -");
+        scanf("%d", &move);
+        while (move > possible || move < 1){
+            printf("You can't take that much!\nYou can take %d sticks.\nHow many sticks do you take? -:", possible);
+            scanf("%d", &move);
+        }
+        possible = 2 * move;
+        total = total - move;
+        if (total == 0){
+            printf("You have won! Congratulations!\n");
+            break;
+        }
+        move_c = next_turn(total, possible);
+        printf("I think I'll take %d sticks.\nThere are %d sticks left.\n",move_c, total -= move_c);
+        if (total > 0){
+            printf("You can take %d sticks.\n",  possible = 2 * move_c);
+        }
+        else{
+            printf("Oh! You've lost!\n");
+            break;
+        }
     }
-    printf("%d", next_turn(total, possible));
+
     return 0;
 }
 
@@ -64,3 +87,4 @@ int next_turn(int total, int possible) {
 
     return ans;
 }
+
