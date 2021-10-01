@@ -52,16 +52,17 @@ int fib(int n) {
 int fib_num(int x) {
     int fib_system[1000] = {0};
     int ans;
+    int fb[1000] = {1, 1};
     ans = 1;
 
     while (x != 0) {
         int k;
         k = 2;
-        while (x >= fib(k)) {
+        while (x >= (fb[k] = fib(k))) {
             k++;
         }
         fib_system[k - 2] = 1;
-        x = x - fib(k - 1);
+        x = x - fb[k - 1];
     }
 
     while (fib_system[ans - 1] == 0){
