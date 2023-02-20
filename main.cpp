@@ -71,7 +71,7 @@ int solutions_equation(double a, double b, double c, double* x1, double* x2){
         *x1 = *x2 = NAN;
         return NO_ROOTS;
     }
-
+    // double sqrt call
     *x1 = (-b + sqrt(D)) / (2 * a);
     *x2 = (-b - sqrt(D)) / (2 * a);
     return TWO_ROOTS;
